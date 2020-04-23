@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import filesize from 'filesize';
 
+import { readableColor } from 'polished';
 import Header from '../../components/Header';
 import FileList from '../../components/FileList';
 import Upload from '../../components/Upload';
@@ -32,10 +33,20 @@ const Import: React.FC = () => {
     } catch (err) {
       // console.log(err.response.error);
     }
+    history.push('/');
   }
 
   function submitFile(files: File[]): void {
-    // TODO
+    files.forEach((file) =>
+      setUploadedFiles([
+        ...uploadedFiles,
+        {
+          file,
+          name: file.name,
+          readableSize: filesize(file.size),
+        },
+      ]),
+    );
   }
 
   return (
